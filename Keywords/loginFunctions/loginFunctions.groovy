@@ -33,7 +33,7 @@ public class loginFunctions {
 		Mobile.startApplication(appPath, false)
 
 		// Optional - Wait for login page element
-		  Elements.checkElementPresenceByName('LoginPage/usernameField', 20)
+		Elements.checkElementPresenceByName('LoginPage/usernameField', 20)
 	}
 
 

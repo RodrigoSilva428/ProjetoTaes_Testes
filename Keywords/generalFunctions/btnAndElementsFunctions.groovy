@@ -21,4 +21,12 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable
 
 public class btnAndElementsFunctions {
+
+	@Keyword
+	def checkElementPresenceByName(String objectPath, int timeout = 20) {
+
+		TestObject to = findTestObject(objectPath)
+
+		return Mobile.waitForElementPresent(to, timeout)
+	}
 }
