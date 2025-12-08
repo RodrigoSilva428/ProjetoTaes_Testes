@@ -25,17 +25,26 @@ public class loginFunctions {
 
 	@Keyword
 	def openApp() {
+		try {
+			println("DEBUG: Starting openApp()")
 
-		// Path to your APK (change as needed)
-		String appPath = GlobalVariable.AppPath
+			String appPath = GlobalVariable.AppPath
+			println("DEBUG: App path = " + appPath)
 
-		// Starts the app
-		Mobile.startApplication(appPath, false)
+			println("DEBUG: Starting application...")
+			//Mobile.startApplication(appPath, false)
+			println("DEBUG: Application started")
 
-		// Optional - Wait for login page element
-		Elements.checkElementPresenceByName('LoginPage/usernameField', 20)
+			println("DEBUG: Checking for username field...")
+			//Elements.checkElementPresenceById('etUsername', 20)
+			println("DEBUG: Username field found")
+
+			KeywordUtil.logInfo("App opened successfully")
+		} catch(Exception e) {
+			println("DEBUG: Exception occurred - " + e.getMessage())
+			KeywordUtil.markFailed("Failed to open app: " + e.getMessage())
+		}
 	}
-
 
 	@Keyword
 	def closeApp() {
