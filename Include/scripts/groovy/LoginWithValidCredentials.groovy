@@ -43,26 +43,19 @@ import cucumber.api.java.en.When
 
 
 
-class LoginWithInvalidCredentials {
-
-
-	@Then("i stay in the login page")
+class LoginWithValidCredentials {
+@Then("I see the homepage")
 	def verifyErrorMessage() {
-		println("DEBUG: Step reached - verifying error message")
+		TestObject bisca3Btn = new TestObject("bisca3Btn")
+		bisca3Btn.addProperty("resource-id", ConditionType.EQUALS, "com.example.taes_bisca:id/cardBisca3")
 
-		//Look for username field:
-		TestObject usernameField = new TestObject("usernameField")
-		usernameField.addProperty("resource-id", ConditionType.EQUALS, "com.example.taes_bisca:id/etUsername")
+		boolean isPresent = Mobile.waitForElementPresent(bisca3Btn, 10)
 
-		// Try to find it on the device
-		boolean isPresent = Mobile.waitForElementPresent(usernameField, 10)
-		println("DEBUG: Username field present? " + isPresent)
-
-		println("DEBUG: Error message present? " + isPresent)
-
+		println("DEBUG: Bisca 3 button present? " + isPresent)
 
 		if (!isPresent) {
-			KeywordUtil.markFailed("Error message not displayed on screen")
+			KeywordUtil.markFailed("Homepage not found (used play Bisca 3 btn as reference)!")
 		}
+
 	}
 }

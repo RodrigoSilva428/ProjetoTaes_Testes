@@ -43,12 +43,28 @@ import cucumber.api.java.en.When
 
 
 
-class LoginWithInvalidCredentials {
+class LoginSteps {
 
 
-	@Then("i stay in the login page")
-	def verifyErrorMessage() {
-		println("DEBUG: Step reached - verifying error message")
+	@Given("the app is opened")
+	def openApp() {
+		println("DEBUG: Starting the app at path = " + GlobalVariable.AppPath)
+		boolean appExists = new File(GlobalVariable.AppPath).exists()
+		println("DEBUG: APK exists? " + appExists)
+
+		if (!appExists) {
+			KeywordUtil.markFailed("APK not found at: " + GlobalVariable.AppPath)
+		}
+
+		Mobile.startApplication(GlobalVariable.AppPath, false)
+		println("DEBUG: App started successfully")
+		Mobile.delay(2)
+	}
+
+	@When("the user enters username \"(.*)\" and password \"(.*)\"")
+	def enterCredentials(String usernameText, String passwordText) {
+
+		println("DEBUG: Step reached - ENTERING USERNAME AND PASSWRD")
 
 		//Look for username field:
 		TestObject usernameField = new TestObject("usernameField")
@@ -58,11 +74,37 @@ class LoginWithInvalidCredentials {
 		boolean isPresent = Mobile.waitForElementPresent(usernameField, 10)
 		println("DEBUG: Username field present? " + isPresent)
 
-		println("DEBUG: Error message present? " + isPresent)
+		// Enter text into username
+		Mobile.setText(usernameField, usernameText, 10)
 
 
-		if (!isPresent) {
-			KeywordUtil.markFailed("Error message not displayed on screen")
-		}
+		//Look for password field:
+		TestObject passwordField = new TestObject("passwordField")
+		passwordField.addProperty("resource-id", ConditionType.EQUALS, "com.example.taes_bisca:id/etPassword")
+
+		// Try to find it on the device
+		isPresent = Mobile.waitForElementPresent(passwordField, 10)
+		println("DEBUG: Password field present? " + isPresent)
+
+
+		// Enter text into password
+		Mobile.setText(passwordField, passwordText, 10)
+	}
+
+	@And("the user taps the login button")
+	def tapLoginButton() {
+		println("DEBUG: Step reached - tapping login button")
+		// Locate login button
+		TestObject loginBtn = new TestObject("loginButton")
+		loginBtn.addProperty("resource-id", ConditionType.EQUALS, "com.example.taes_bisca:id/tvLogin")
+
+		// Wait for it to be present
+		boolean isPresent = Mobile.waitForElementPresent(loginBtn, 10)
+		println("DEBUG: Login button present? " + isPresent)
+
+		// Tap it
+		Mobile.tap(loginBtn, 10)
+
+		println("DEBUG: Login button tapped")
 	}
 }
