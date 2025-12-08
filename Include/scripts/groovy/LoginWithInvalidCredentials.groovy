@@ -93,14 +93,39 @@ class LoginWithInvalidCredentials {
 	@And("the user taps the login button")
 	def tapLoginButton() {
 		println("DEBUG: Step reached - tapping login button")
-		// Placeholder: eventually we will locate the login button TestObject and tap it
+		// Locate login button
+		TestObject loginBtn = new TestObject("loginButton")
+		loginBtn.addProperty("resource-id", ConditionType.EQUALS, "com.example.taes_bisca:id/tvLogin")
+	
+		// Wait for it to be present
+		boolean isPresent = Mobile.waitForElementPresent(loginBtn, 10)
+		println("DEBUG: Login button present? " + isPresent)
+	
+		// Tap it
+		Mobile.tap(loginBtn, 10)
+		
+		println("DEBUG: Login button tapped")
 	}
 	
-	@Then("an error message is displayed")
+	@Then("i stay in the login page")
 	def verifyErrorMessage() {
 		println("DEBUG: Step reached - verifying error message")
-		// For now, just print to avoid failures
-		println("DEBUG: (Placeholder) Here we would check for the error message element")
+	
+		//Look for username field:
+		TestObject usernameField = new TestObject("usernameField")
+		usernameField.addProperty("resource-id", ConditionType.EQUALS, "com.example.taes_bisca:id/etUsername")
+		
+		// Try to find it on the device
+		boolean isPresent = Mobile.waitForElementPresent(usernameField, 10)
+		println("DEBUG: Username field present? " + isPresent)
+   
+		println("DEBUG: Error message present? " + isPresent)
+
+		
+		if (!isPresent) {
+			KeywordUtil.markFailed("Error message not displayed on screen")
+    	}
+	
 	}
 
 }

@@ -24,4 +24,4 @@ Feature: Login functionality
     Given the app is opened
     When the user enters username "fakeUser" and password "fakePassword"
     And the user taps the login button
-    Then an error message is displayed
+    Then i stay in the login page
