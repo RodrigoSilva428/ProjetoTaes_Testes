@@ -47,13 +47,12 @@ class OpenAppSteps {
 
 	@Given("the user opens the app")
 	def user_opens_app() {
-		println("DEBUG: App path = " + GlobalVariable.AppPath)
-		println("DEBUG: Checking APK exists: " + new File(GlobalVariable.AppPath).exists())
+
 		
 		String appPath = GlobalVariable.AppPath
 		def login = new Login()
-		//login.openApp()
-		Mobile.startApplication(appPath, false)
+		login.openApp()
+		//Mobile.startApplication(appPath, false)
 	
 	}
 }

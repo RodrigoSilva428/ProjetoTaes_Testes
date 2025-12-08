@@ -26,20 +26,12 @@ public class loginFunctions {
 	@Keyword
 	def openApp() {
 		try {
-			println("DEBUG: Starting openApp()")
-
+			
+			println("DEBUG: App path = " + GlobalVariable.AppPath)
+			println("DEBUG: Checking APK exists: " + new File(GlobalVariable.AppPath).exists())
+			
 			String appPath = GlobalVariable.AppPath
-			println("DEBUG: App path = " + appPath)
-
-			println("DEBUG: Starting application...")
-			//Mobile.startApplication(appPath, false)
-			println("DEBUG: Application started")
-
-			println("DEBUG: Checking for username field...")
-			//Elements.checkElementPresenceById('etUsername', 20)
-			println("DEBUG: Username field found")
-
-			KeywordUtil.logInfo("App opened successfully")
+			Mobile.startApplication(appPath, false)
 		} catch(Exception e) {
 			println("DEBUG: Exception occurred - " + e.getMessage())
 			KeywordUtil.markFailed("Failed to open app: " + e.getMessage())
