@@ -23,10 +23,12 @@ import internal.GlobalVariable
 public class btnAndElementsFunctions {
 
 	@Keyword
-	def checkElementPresenceByName(String objectPath, int timeout = 20) {
-
-		TestObject to = findTestObject(objectPath)
-
-		return Mobile.waitForElementPresent(to, timeout)
-	}
+def checkElementPresenceByName(String objectPath, int timeout = 20) {
+    TestObject to = findTestObject(objectPath)
+    if (to == null) {
+        println("DEBUG: TestObject not found: " + objectPath)
+        return false
+    }
+    return Mobile.waitForElementPresent(to, timeout)
+}
 }

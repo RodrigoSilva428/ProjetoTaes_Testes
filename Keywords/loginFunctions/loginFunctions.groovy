@@ -32,6 +32,9 @@ public class loginFunctions {
 			
 			String appPath = GlobalVariable.AppPath
 			Mobile.startApplication(appPath, false)
+			
+			
+			
 		} catch(Exception e) {
 			println("DEBUG: Exception occurred - " + e.getMessage())
 			KeywordUtil.markFailed("Failed to open app: " + e.getMessage())

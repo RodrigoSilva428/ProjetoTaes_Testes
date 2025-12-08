@@ -48,12 +48,11 @@ class OpenAppSteps {
 	@Given("the user opens the app")
 	def user_opens_app() {
 
-		
+
 		String appPath = GlobalVariable.AppPath
 		def login = new Login()
 		login.openApp()
 		//Mobile.startApplication(appPath, false)
-	
 	}
 }
 
