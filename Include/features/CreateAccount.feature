@@ -36,4 +36,5 @@ Feature: Account creation
     When the user enters that username
     And the user enters password "pass123"
     And the user taps the create account button
-    Then I see an error "Account already exists"
+    Then I verify account creation wasnt sucessfull
+
