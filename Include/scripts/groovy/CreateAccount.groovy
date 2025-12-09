@@ -46,14 +46,37 @@ import cucumber.api.java.en.When
 class CreateAccount {
 
 
-    @Given("the user taps the sign up button")
-    def tapSignUpButton() {
-        // Navigate to the sign up / create account screen
-    }
+	@Given("the user taps the sign up button")
+	def tapSignUpButton() {
+    	println("DEBUG: Step reached - tapping sign up button")
+
+    	// Locate Sign Up button
+    	TestObject signupBtn = new TestObject("cardSignUpButton")
+    	signupBtn.addProperty("resource-id", ConditionType.EQUALS, "com.example.taes_bisca:id/cardSignUpButton")
+
+    	// Wait for it to be present
+    	boolean isPresent = Mobile.waitForElementPresent(signupBtn, 10)
+    	println("DEBUG: Sign up button present? " + isPresent)
+
+    	// Tap it
+    	Mobile.tap(signupBtn, 10)
+
+    	println("DEBUG: Sign up button tapped")
+	}
 
     @When("the user enters a new unique username")
     def enterUniqueUsername() {
         // Generate a unique username and enter it in the username field
+		
+		// Generate a unique username
+		String uniqueUsername = "user" + System.currentTimeMillis()
+		// Store it for reuse in later scenarios
+		GlobalVariable.createdUsername = uniqueUsername
+		String password = "pass123"
+	
+		println("DEBUG: Step reached - ENTERING UNIQUE USERNAME: " + uniqueUsername)
+	
+	
     }
 
     @When("the user enters password {string}")
