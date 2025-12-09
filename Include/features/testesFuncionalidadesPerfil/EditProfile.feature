@@ -25,4 +25,3 @@ Scenario: Edit the username in the profile
     And the user navigates to the edit profile page
     And the user edits the username to "newUsername"
     Then the updated username "newUsername" is displayed in the profile
-

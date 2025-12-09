@@ -49,15 +49,13 @@ import ReadAndCheckText
 
 class editUsername {
 
-	
+
 	@And("the user navigates to the edit profile page")
 	def userNavigatesToProfile() {
 		// Tap the "Editar Perfil" button using your helper
 		buttons.tapButton("EditProfile", "com.example.taes_bisca:id/cardEditButton")
-
-		
 	}
-	
+
 	@And("the user edits the username to {string}")
 	def performEditUsername(String newUsername) {
 		println("DEBUG: Editing username to: " + newUsername)
@@ -71,24 +69,26 @@ class editUsername {
 		println("DEBUG: Username edited successfully")
 	}
 
-	
+
 
 	@Then("the updated username {string} is displayed in the profile")
 	def verifyUpdatedUsername(String expectedUsername) {
 		println("DEBUG: Verifying that the username is now: " + expectedUsername)
 		Mobile.delay(1)
 		println("DEBUG: Verification complete")
-		
+
 		boolean isCorrect = ReadAndCheckText.checkText(expectedUsername, "com.example.taes_bisca:id/etUsername")
-		
-		
-		
+
+
+
 		buttons.tapButton("EditProfile", "com.example.taes_bisca:id/cardEditButton")
 		editTextHelper.editText("com.example.taes_bisca:id/etUsername", "correctUser")
 		buttons.tapButton("Editar Perfil", "com.yourpackage:id/cardEditButton")
 		findButtonByText.findBtnText('Save')
-		
-		if(!isCorrect) { KeywordUtil.markFailed("Username verification FAILED! Expected: " + expectedUsername)}
+
+		if(!isCorrect) {
+			KeywordUtil.markFailed("Username verification FAILED! Expected: " + expectedUsername)
+		}
 		Mobile.closeApplication()
 	}
 }
