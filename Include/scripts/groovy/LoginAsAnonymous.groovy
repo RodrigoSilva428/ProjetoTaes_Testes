@@ -42,23 +42,14 @@ import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
 
 
-
+import buttons as Btn
 class LoginAsAnonymous {
-	/**
-	 * The step definitions below match with Katalon sample Gherkin steps
-	 */
-	@Given("I want to write a step with (.*)")
-	def I_want_to_write_a_step_with_name(String name) {
-		println name
-	}
+	
+    @When('the user taps the "(.*)" button')
+    def tapButtonStep(String buttonName) {
+        println "Tapping button: ${buttonName}"
+		Btn.tapButton("Login as Anonymous", "com.example.taes_bisca:id/enterAsAnonymousBtn")
+     
+    }
 
-	@When("I check for the {int} in step")
-	def I_check_for_the_value_in_step(int value) {
-		println value
-	}
-
-	@Then("I verify the (.*) in step")
-	def I_verify_the_status_in_step(String status) {
-		println status
-	}
 }

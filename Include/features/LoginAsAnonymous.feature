@@ -20,8 +20,8 @@
 Feature: Login as Anonoymous
   I want to login as anonymous
 
-  @tag1
-  Scenario Outline: Title of your scenario outline
-    Given the app is opened
-    When the user taps the button 
-    Then I see the homepage
+@tag1
+Scenario: User logs in anonymously
+  Given the app is opened
+  When the user taps the "Login as Anonymous" button
+  Then I see the homepage

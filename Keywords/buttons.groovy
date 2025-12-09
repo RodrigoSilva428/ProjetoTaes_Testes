@@ -15,12 +15,13 @@ import com.kms.katalon.core.testobject.TestObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
-
+import com.kms.katalon.core.testobject.ConditionType
 import internal.GlobalVariable
 
 public class buttons {
-
-	def tapButton(String buttonName, String resourceId) {
+	
+	@Keyword
+	def static tapButton(String buttonName, String resourceId) {
 		println("DEBUG: Step reached - tapping ${buttonName} button")
 		
 		// Create a TestObject dynamically
@@ -40,3 +41,4 @@ public class buttons {
 		}
 	
 	}
+}
