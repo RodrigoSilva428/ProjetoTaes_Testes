@@ -77,16 +77,17 @@ class editUsername {
 		Mobile.delay(1)
 		println("DEBUG: Verification complete")
 
-		boolean isCorrect = ReadAndCheckText.checkText(expectedUsername, "com.example.taes_bisca:id/etUsername")
+		boolean shouldFail = ReadAndCheckText.checkText(expectedUsername, "com.example.taes_bisca:id/etUsername")
 
-
+		Mobile.delay(1)
+		
 
 		buttons.tapButton("EditProfile", "com.example.taes_bisca:id/cardEditButton")
-		editTextHelper.editText("com.example.taes_bisca:id/etUsername", "correctUser")
+		editTextHelper.editText("com.example.taes_bisca:id/etUsername", GlobalVariable.usernameLoggedIn)
 		buttons.tapButton("Editar Perfil", "com.yourpackage:id/cardEditButton")
 		findButtonByText.findBtnText('Save')
 
-		if(!isCorrect) {
+		if(shouldFail) {
 			KeywordUtil.markFailed("Username verification FAILED! Expected: " + expectedUsername)
 		}
 		Mobile.closeApplication()

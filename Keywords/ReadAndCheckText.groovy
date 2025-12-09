@@ -13,14 +13,14 @@ class ReadAndCheckText {
             // Find the element by resource-id
             WebElement element = driver.findElementById(elementId)
             String actualText = element.getText()
-
-            if(actualText == expectedText) {
-                println "Text matches: '${actualText}'"
-                return true
-            } else {
-                println "Text does NOT match. Expected: '${expectedText}', Found: '${actualText}'"
-                return false
-            }
+			println "Expect: '${expectedText}', Found: '${actualText}'"
+           if (actualText.equals(expectedText)) {
+			   println "Text matches: '${actualText}'"
+			   return true
+		   } else {
+			   println "Text does NOT match. Expected: '${expectedText}', Found: '${actualText}'"
+			   return false
+	}
         } catch(Exception e) {
             println "Failed to find element with id '${elementId}': ${e.message}"
             return false
