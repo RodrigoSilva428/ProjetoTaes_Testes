@@ -44,21 +44,47 @@ import cucumber.api.java.en.When
 
 
 class CreateAccount {
-	/**
-	 * The step definitions below match with Katalon sample Gherkin steps
-	 */
-	@Given("I want to write a step with (.*)")
-	def I_want_to_write_a_step_with_name(String name) {
-		println name
-	}
 
-	@When("I check for the {int} in step")
-	def I_check_for_the_value_in_step(int value) {
-		println value
-	}
 
-	@Then("I verify the (.*) in step")
-	def I_verify_the_status_in_step(String status) {
-		println status
-	}
+    @Given("the user taps the sign up button")
+    def tapSignUpButton() {
+        // Navigate to the sign up / create account screen
+    }
+
+    @When("the user enters a new unique username")
+    def enterUniqueUsername() {
+        // Generate a unique username and enter it in the username field
+    }
+
+    @When("the user enters password {string}")
+    def enterPassword(String password) {
+        // Enter the provided password in the password field
+    }
+
+    @When("the user taps the create account button")
+    def tapCreateAccount() {
+        // Tap the button to submit the new account
+    }
+
+    @Then("the account is successfully created")
+    def accountCreated() {
+        // Verify account creation was successful
+    }
+
+    @Given("the same username was already created")
+    def useExistingUsername() {
+        // Reuse the stored username for testing duplicate creation
+    }
+
+    @When("the user enters that username")
+    def enterStoredUsername() {
+        // Enter the previously created username
+    }
+
+    @Then('I see an error "Account already exists"')
+    def duplicateError() {
+        // Verify the duplicate account error message appears
+        Mobile.closeApplication()
+    }
 }
+
