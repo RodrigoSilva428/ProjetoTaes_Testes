@@ -59,7 +59,7 @@ class LoginWithInvalidCredentials {
 		println("DEBUG: Username field present? " + isPresent)
 
 		println("DEBUG: Error message present? " + isPresent)
-
+		Mobile.closeApplication()
 
 		if (!isPresent) {
 			KeywordUtil.markFailed("Error message not displayed on screen")

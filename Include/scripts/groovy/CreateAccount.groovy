@@ -43,19 +43,22 @@ import cucumber.api.java.en.When
 
 
 
-class LoginWithValidCredentials {
-	@Then("I see the homepage")
-	def verifyErrorMessage() {
-		TestObject bisca3Btn = new TestObject("bisca3Btn")
-		bisca3Btn.addProperty("resource-id", ConditionType.EQUALS, "com.example.taes_bisca:id/cardBisca3")
+class CreateAccount {
+	/**
+	 * The step definitions below match with Katalon sample Gherkin steps
+	 */
+	@Given("I want to write a step with (.*)")
+	def I_want_to_write_a_step_with_name(String name) {
+		println name
+	}
 
-		boolean isPresent = Mobile.waitForElementPresent(bisca3Btn, 10)
+	@When("I check for the {int} in step")
+	def I_check_for_the_value_in_step(int value) {
+		println value
+	}
 
-		println("DEBUG: Bisca 3 button present? " + isPresent)
-		Mobile.closeApplication()
-		if (!isPresent) {
-			KeywordUtil.markFailed("Homepage not found (used play Bisca 3 btn as reference)!")
-			//Mobile.closeApplication()
-		}
+	@Then("I verify the (.*) in step")
+	def I_verify_the_status_in_step(String status) {
+		println status
 	}
 }
