@@ -1,3 +1,4 @@
+package login
 import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
@@ -43,19 +44,26 @@ import cucumber.api.java.en.When
 
 
 
-class LoginWithValidCredentials {
-	@Then("I see the homepage")
+class LoginWithInvalidCredentials {
+
+
+	@Then("i stay in the login page")
 	def verifyErrorMessage() {
-		TestObject bisca3Btn = new TestObject("bisca3Btn")
-		bisca3Btn.addProperty("resource-id", ConditionType.EQUALS, "com.example.taes_bisca:id/cardBisca3")
+		println("DEBUG: Step reached - verifying error message")
 
-		boolean isPresent = Mobile.waitForElementPresent(bisca3Btn, 10)
+		//Look for username field:
+		TestObject usernameField = new TestObject("usernameField")
+		usernameField.addProperty("resource-id", ConditionType.EQUALS, "com.example.taes_bisca:id/etUsername")
 
-		println("DEBUG: Bisca 3 button present? " + isPresent)
+		// Try to find it on the device
+		boolean isPresent = Mobile.waitForElementPresent(usernameField, 10)
+		println("DEBUG: Username field present? " + isPresent)
+
+		println("DEBUG: Error message present? " + isPresent)
 		Mobile.closeApplication()
+
 		if (!isPresent) {
-			KeywordUtil.markFailed("Homepage not found (used play Bisca 3 btn as reference)!")
-			//Mobile.closeApplication()
+			KeywordUtil.markFailed("Error message not displayed on screen")
 		}
 	}
 }

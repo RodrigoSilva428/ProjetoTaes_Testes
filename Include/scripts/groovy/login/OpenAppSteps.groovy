@@ -1,3 +1,4 @@
+package login
 import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
@@ -41,28 +42,18 @@ import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
 
+import loginFunctions.loginFunctions as Login
+
+class OpenAppSteps {
+
+	@Given("the user opens the app")
+	def user_opens_app() {
 
 
-class LoginWithInvalidCredentials {
-
-
-	@Then("i stay in the login page")
-	def verifyErrorMessage() {
-		println("DEBUG: Step reached - verifying error message")
-
-		//Look for username field:
-		TestObject usernameField = new TestObject("usernameField")
-		usernameField.addProperty("resource-id", ConditionType.EQUALS, "com.example.taes_bisca:id/etUsername")
-
-		// Try to find it on the device
-		boolean isPresent = Mobile.waitForElementPresent(usernameField, 10)
-		println("DEBUG: Username field present? " + isPresent)
-
-		println("DEBUG: Error message present? " + isPresent)
-		Mobile.closeApplication()
-
-		if (!isPresent) {
-			KeywordUtil.markFailed("Error message not displayed on screen")
-		}
+		String appPath = GlobalVariable.AppPath
+		def login = new Login()
+		login.openApp()
+		//Mobile.startApplication(appPath, false)
 	}
 }
+

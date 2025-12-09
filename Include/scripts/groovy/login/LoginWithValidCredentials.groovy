@@ -1,3 +1,4 @@
+package login
 import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
@@ -42,14 +43,20 @@ import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
 
 
-import buttons as Btn
-class LoginAsAnonymous {
-	
-    @When('the user taps the "(.*)" button')
-    def tapButtonStep(String buttonName) {
-        println "Tapping button: ${buttonName}"
-		Btn.tapButton("Login as Anonymous", "com.example.taes_bisca:id/enterAsAnonymousBtn")
-     
-    }
 
+class LoginWithValidCredentials {
+	@Then("I see the homepage")
+	def verifyErrorMessage() {
+		TestObject bisca3Btn = new TestObject("bisca3Btn")
+		bisca3Btn.addProperty("resource-id", ConditionType.EQUALS, "com.example.taes_bisca:id/cardBisca3")
+
+		boolean isPresent = Mobile.waitForElementPresent(bisca3Btn, 10)
+
+		println("DEBUG: Bisca 3 button present? " + isPresent)
+		Mobile.closeApplication()
+		if (!isPresent) {
+			KeywordUtil.markFailed("Homepage not found (used play Bisca 3 btn as reference)!")
+			//Mobile.closeApplication()
+		}
+	}
 }

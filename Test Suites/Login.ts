@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestSuiteEntity>
-   <description>Suite to test login functionalities</description>
+   <description>Testing login features</description>
    <name>Login</name>
    <tag></tag>
    <isRerun>false</isRerun>
@@ -10,5 +10,5 @@
    <pageLoadTimeoutDefault>true</pageLoadTimeoutDefault>
    <rerunFailedTestCasesOnly>false</rerunFailedTestCasesOnly>
    <rerunImmediately>false</rerunImmediately>
-   <testSuiteGuid>11482b8a-f31a-40a6-a9b3-79bc05a505ca</testSuiteGuid>
+   <testSuiteGuid>8b5b8ab1-199e-421b-9b8c-c8fd16730bd6</testSuiteGuid>
 </TestSuiteEntity>
