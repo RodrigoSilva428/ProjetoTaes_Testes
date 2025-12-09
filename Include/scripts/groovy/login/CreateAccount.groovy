@@ -49,45 +49,43 @@ class CreateAccount {
 
 	@Given("the user taps the sign up button")
 	def tapSignUpButton() {
-        println("DEBUG: Step reached - tapping sign up button")
+		println("DEBUG: Step reached - tapping sign up button")
 
-        // Locate Sign Up button (Back to Login is separate)
-        TestObject signUpBtn = new TestObject("cardSignUpButton")
+		// Locate Sign Up button (Back to Login is separate)
+		TestObject signUpBtn = new TestObject("cardSignUpButton")
 		signUpBtn.addProperty("resource-id", ConditionType.EQUALS, "com.example.taes_bisca:id/cardSignUpButton")
 
 
-        if (Mobile.waitForElementPresent(signUpBtn, 10)) {
-            Mobile.tap(signUpBtn, 10)
-            println("DEBUG: Sign Up button tapped")
-        } else {
-            KeywordUtil.markFailed("Sign Up button not found")
-        }
-    }
+		if (Mobile.waitForElementPresent(signUpBtn, 10)) {
+			Mobile.tap(signUpBtn, 10)
+			println("DEBUG: Sign Up button tapped")
+		} else {
+			KeywordUtil.markFailed("Sign Up button not found")
+		}
+	}
 
-    @When("the user enters a new unique username")
-    def enterUniqueUsername() {
+	@When("the user enters a new unique username")
+	def enterUniqueUsername() {
 
-        // Generate a unique username
-        String uniqueUsername = "user" + System.currentTimeMillis()
-        GlobalVariable.createdUsername = uniqueUsername
-        println("DEBUG: Entering unique username: " + uniqueUsername)
+		// Generate a unique username
+		String uniqueUsername = "user" + System.currentTimeMillis()
+		GlobalVariable.createdUsername = uniqueUsername
+		println("DEBUG: Entering unique username: " + uniqueUsername)
 
-        // Locate the username EditText
-        TestObject usernameField = new TestObject("etSignUpUsername")
-        usernameField.addProperty("resource-id", ConditionType.EQUALS, "com.example.taes_bisca:id/etSignUpUsername")
+		// Locate the username EditText
+		TestObject usernameField = new TestObject("etSignUpUsername")
+		usernameField.addProperty("resource-id", ConditionType.EQUALS, "com.example.taes_bisca:id/etSignUpUsername")
 
-        if (Mobile.waitForElementPresent(usernameField, 10)) {
-            Mobile.setText(usernameField, uniqueUsername, 10)
-            println("DEBUG: Username entered successfully")
-        } else {
-            Mobile.closeApplication()
-            KeywordUtil.markFailed("Username field not found")
-        }
-    
-	
-    }
+		if (Mobile.waitForElementPresent(usernameField, 10)) {
+			Mobile.setText(usernameField, uniqueUsername, 10)
+			println("DEBUG: Username entered successfully")
+		} else {
+			Mobile.closeApplication()
+			KeywordUtil.markFailed("Username field not found")
+		}
+	}
 
-    @When("the user enters password {string}")
+	@When("the user enters password {string}")
 	def enterPassword(String password) {
 		println("DEBUG: Entering password: " + password)
 
@@ -114,65 +112,64 @@ class CreateAccount {
 			Mobile.closeApplication()
 			KeywordUtil.markFailed("Confirm password field not found")
 		}
-}
+	}
 
 
 	@When("the user taps the create account button")
 	def tapCreateAccount() {
 		TestObject submitBtn = new TestObject("cardSignUpSubmit")
 		submitBtn.addProperty("resource-id", ConditionType.EQUALS, "com.example.taes_bisca:id/cardSignUpSubmit")
-    
+
 		if (Mobile.waitForElementPresent(submitBtn, 10)) {
 			Mobile.tap(submitBtn, 10)
 			println("DEBUG: Create Account button tapped")
 		} else {
 			Mobile.closeApplication()
 			KeywordUtil.markFailed("Create Account button not found")
-    }
-}
+		}
+	}
 
-    @Then("the account is successfully created")
-    def accountCreated() {
-        // Verify account creation was successful
+	@Then("the account is successfully created")
+	def accountCreated() {
+		// Verify account creation was successful
 		// Create a TestObject for the login button
 		TestObject loginBtn = new TestObject("cardLoginButton")
 		loginBtn.addProperty("resource-id", ConditionType.EQUALS, "com.example.taes_bisca:id/cardLoginButton")
-	
+
 		// Wait for the element to appear (timeout 10 seconds)
 		if (Mobile.waitForElementPresent(loginBtn, 10)) {
 			println("DEBUG: Account created successfully - Login button is visible")
 		} else {
 			KeywordUtil.markFailed("Account creation failed - Login button not found")
 		}
-    }
+	}
 
-    @Given("the same username was already created")
-    def useExistingUsername() {
-        // Reuse the stored username for testing duplicate creation
+	@Given("the same username was already created")
+	def useExistingUsername() {
+		// Reuse the stored username for testing duplicate creation
 		println("DEBUG: Reusing existing username: " + GlobalVariable.createdUsername)
-    }
+	}
 
-    @When("the user enters that username")
-    def enterStoredUsername() {
-            // Locate the username field
-    TestObject usernameField = new TestObject("etSignUpUsername")
-    usernameField.addProperty("resource-id", ConditionType.EQUALS, "com.example.taes_bisca:id/etSignUpUsername")
+	@When("the user enters that username")
+	def enterStoredUsername() {
+		// Locate the username field
+		TestObject usernameField = new TestObject("etSignUpUsername")
+		usernameField.addProperty("resource-id", ConditionType.EQUALS, "com.example.taes_bisca:id/etSignUpUsername")
 
-    if (Mobile.waitForElementPresent(usernameField, 10)) {
-        Mobile.setText(usernameField, GlobalVariable.createdUsername, 10)
-        println("DEBUG: Entered existing username successfully")
-    } else {
-        KeywordUtil.markFailed("Username field not found")
-    
-    }
-}
+		if (Mobile.waitForElementPresent(usernameField, 10)) {
+			Mobile.setText(usernameField, GlobalVariable.createdUsername, 10)
+			println("DEBUG: Entered existing username successfully")
+		} else {
+			KeywordUtil.markFailed("Username field not found")
+		}
+	}
 
-    @Then('I verify account creation wasnt sucessfull')
-    def duplicateError() {
-        // Verify the duplicate account error message appears
+	@Then('I verify account creation wasnt sucessfull')
+	def duplicateError() {
+		// Verify the duplicate account error message appears
 		TestObject loginBtn = new TestObject("cardLoginButton")
 		loginBtn.addProperty("resource-id", ConditionType.EQUALS, "com.example.taes_bisca:id/cardLoginButton")
-	
+
 		// Wait for the element to appear (timeout 10 seconds)
 		if (!Mobile.waitForElementPresent(loginBtn, 10)) {
 			println("DEBUG: Account creation failed - Login button is not visible")
@@ -180,10 +177,8 @@ class CreateAccount {
 			KeywordUtil.markFailed("Account creation succeeded - error")
 		}
 
-	
-	
-        Mobile.closeApplication()
-    }
 
 
+		Mobile.closeApplication()
+	}
 }

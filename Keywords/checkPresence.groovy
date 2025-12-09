@@ -11,33 +11,23 @@ import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
 import com.kms.katalon.core.model.FailureHandling
 import com.kms.katalon.core.testcase.TestCase
 import com.kms.katalon.core.testdata.TestData
+import com.kms.katalon.core.testobject.ConditionType
 import com.kms.katalon.core.testobject.TestObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
-import com.kms.katalon.core.testobject.ConditionType
+
 import internal.GlobalVariable
 
-public class buttons {
+public class checkPresence {
 
-	@Keyword
-	def static tapButton(String buttonName, String resourceId) {
-		println("DEBUG: Step reached - tapping ${buttonName} button")
+    @Keyword
+    static boolean isElementPresent(String resourceId, String description, int timeout = 10) {
+        TestObject obj = new TestObject(description)
+        obj.addProperty("resource-id", ConditionType.EQUALS, resourceId)
 
-		// Create a TestObject dynamically
-		TestObject button = new TestObject(buttonName)
-		button.addProperty("resource-id", ConditionType.EQUALS, resourceId)
-
-		// Wait for the element to be present
-		boolean isPresent = Mobile.waitForElementPresent(button, 10)
-		println("DEBUG: ${buttonName} button present? " + isPresent)
-
-		if (isPresent) {
-			// Tap the button
-			Mobile.tap(button, 10)
-			println("DEBUG: ${buttonName} button tapped successfully")
-		} else {
-			println("ERROR: ${buttonName} button not found!")
-		}
-	}
+        boolean isPresent = Mobile.waitForElementPresent(obj, timeout)
+        println("DEBUG: ${description} presence? ${isPresent}")
+        return isPresent
+    }
 }

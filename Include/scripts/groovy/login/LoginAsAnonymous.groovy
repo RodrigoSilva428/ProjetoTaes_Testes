@@ -46,12 +46,10 @@ import cucumber.api.java.en.When
 
 import buttons as Btn
 class LoginAsAnonymous {
-	
-    @When('the user taps the "(.*)" button')
-    def tapButtonStep(String buttonName) {
-        println "Tapping button: ${buttonName}"
-		Btn.tapButton("Login as Anonymous", "com.example.taes_bisca:id/enterAsAnonymousBtn")
-     
-    }
 
+	@When('the user taps the "(.*)" button')
+	def tapButtonStep(String buttonName) {
+		println "Tapping button: ${buttonName}"
+		Btn.tapButton("Login as Anonymous", "com.example.taes_bisca:id/enterAsAnonymousBtn")
+	}
 }
