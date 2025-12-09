@@ -21,13 +21,13 @@ import internal.GlobalVariable
 
 public class checkPresence {
 
-    @Keyword
-    static boolean isElementPresent(String resourceId, String description, int timeout = 10) {
-        TestObject obj = new TestObject(description)
-        obj.addProperty("resource-id", ConditionType.EQUALS, resourceId)
+	@Keyword
+	static boolean isElementPresent(String resourceId, String description, int timeout = 10) {
+		TestObject obj = new TestObject(description)
+		obj.addProperty("resource-id", ConditionType.EQUALS, resourceId)
 
-        boolean isPresent = Mobile.waitForElementPresent(obj, timeout)
-        println("DEBUG: ${description} presence? ${isPresent}")
-        return isPresent
-    }
+		boolean isPresent = Mobile.waitForElementPresent(obj, timeout)
+		println("DEBUG: ${description} presence? ${isPresent}")
+		return isPresent
+	}
 }

@@ -42,71 +42,53 @@ import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
 
-
 import buttons
-import login.LoginSteps
+import editTextHelper
+import findButtonByText
+import ReadAndCheckText
+
+class editUsername {
+
+	
+	@And("the user navigates to the edit profile page")
+	def userNavigatesToProfile() {
+		// Tap the "Editar Perfil" button using your helper
+		buttons.tapButton("EditProfile", "com.example.taes_bisca:id/cardEditButton")
+
+		
+	}
+	
+	@And("the user edits the username to {string}")
+	def performEditUsername(String newUsername) {
+		println("DEBUG: Editing username to: " + newUsername)
 
 
+		editTextHelper.editText("com.example.taes_bisca:id/etUsername", newUsername)
+		buttons.tapButton("Editar Perfil", "com.yourpackage:id/cardEditButton")
+		findButtonByText.findBtnText('Save')
 
-import checkPresence
-
-
-class enterPerfil {
-
-
-
-	@Given("the user is logged in with username {string} and password {string}")
-	def login(String username, String password) {
-
-		println("DEBUG: Starting login process")
-
-		// Open the app
-		boolean appExists = new File(GlobalVariable.AppPath).exists()
-		if (!appExists) {
-			KeywordUtil.markFailed("APK not found at: " + GlobalVariable.AppPath)
-		}
-		Mobile.startApplication(GlobalVariable.AppPath, false)
-		Mobile.delay(2)
-
-		// Enter username
-		TestObject usernameField = new TestObject("usernameField")
-		usernameField.addProperty("resource-id", ConditionType.EQUALS, "com.example.taes_bisca:id/etUsername")
-		Mobile.setText(usernameField, username, 10)
-
-		// Enter password
-		TestObject passwordField = new TestObject("passwordField")
-		passwordField.addProperty("resource-id", ConditionType.EQUALS, "com.example.taes_bisca:id/etPassword")
-		Mobile.setText(passwordField, password, 10)
-
-		// Tap login
-		TestObject loginBtn = new TestObject("loginButton")
-		loginBtn.addProperty("resource-id", ConditionType.EQUALS, "com.example.taes_bisca:id/tvLogin")
-		Mobile.tap(loginBtn, 10)
-
-		println("DEBUG: Login completed for user: " + username)
-		Mobile.delay(2)
+		Mobile.delay(1)
+		println("DEBUG: Username edited successfully")
 	}
 
-	@When("the user navigates to the profile page")
-	def navigateToProfile() {
-		// Replace with navigation steps to profile
-		buttons.tapButton("Profile Button", "com.example.taes_bisca:id/cardProfile")
-	}
+	
 
-	@Then("the profile details are displayed")
-	def verifyProfileDetails() {
-		boolean isEditProfileVisible = checkPresence.isElementPresent(
-				"com.example.taes_bisca:id/cardEditButton",
-				"Editar Perfil Button"
-				)
-
-
-		if (!isEditProfileVisible) {
-			KeywordUtil.markFailed("Editar Perfil button is not visible!")
-		} else {
-			println("DEBUG: Editar Perfil button is visible")
-		}
-
+	@Then("the updated username {string} is displayed in the profile")
+	def verifyUpdatedUsername(String expectedUsername) {
+		println("DEBUG: Verifying that the username is now: " + expectedUsername)
+		Mobile.delay(1)
+		println("DEBUG: Verification complete")
+		
+		boolean isCorrect = ReadAndCheckText.checkText(expectedUsername, "com.example.taes_bisca:id/etUsername")
+		
+		
+		
+		buttons.tapButton("EditProfile", "com.example.taes_bisca:id/cardEditButton")
+		editTextHelper.editText("com.example.taes_bisca:id/etUsername", "correctUser")
+		buttons.tapButton("Editar Perfil", "com.yourpackage:id/cardEditButton")
+		findButtonByText.findBtnText('Save')
+		
+		if(!isCorrect) { KeywordUtil.markFailed("Username verification FAILED! Expected: " + expectedUsername)}
 		Mobile.closeApplication()
 	}
 }
