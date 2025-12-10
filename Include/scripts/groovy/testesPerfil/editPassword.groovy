@@ -42,54 +42,24 @@ import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
 
-import buttons
-import editTextHelper
-import findButtonByText
-import ReadAndCheckText
-
-class editUsername {
 
 
-	@And("the user navigates to the edit profile page")
-	def userNavigatesToProfile() {
-		// Tap the "Editar Perfil" button using your helper
-		buttons.tapButton("EditProfile", "com.example.taes_bisca:id/cardEditButton")
+class editPassword {
+	/**
+	 * The step definitions below match with Katalon sample Gherkin steps
+	 */
+	@Given("I want to write a step with (.*)")
+	def I_want_to_write_a_step_with_name(String name) {
+		println name
 	}
 
-	@And("the user edits the username to {string}")
-	def performEditUsername(String newUsername) {
-		println("DEBUG: Editing username to: " + newUsername)
-
-
-		editTextHelper.editText("com.example.taes_bisca:id/etUsername", newUsername)
-		buttons.tapButton("Editar Perfil", "com.yourpackage:id/cardEditButton")
-		findButtonByText.findBtnText('Save')
-
-		Mobile.delay(1)
-		println("DEBUG: Username edited successfully")
+	@When("I check for the {int} in step")
+	def I_check_for_the_value_in_step(int value) {
+		println value
 	}
 
-
-
-	@Then("the updated username {string} is displayed in the profile")
-	def verifyUpdatedUsername(String expectedUsername) {
-		println("DEBUG: Verifying that the username is now: " + expectedUsername)
-		Mobile.delay(1)
-		println("DEBUG: Verification complete")
-
-		boolean shouldFail = ReadAndCheckText.checkText(expectedUsername, "com.example.taes_bisca:id/etUsername")
-
-		Mobile.delay(1)
-
-
-		buttons.tapButton("EditProfile", "com.example.taes_bisca:id/cardEditButton")
-		editTextHelper.editText("com.example.taes_bisca:id/etUsername", GlobalVariable.usernameLoggedIn)
-		buttons.tapButton("Editar Perfil", "com.yourpackage:id/cardEditButton")
-		findButtonByText.findBtnText('Save')
-
-		if(shouldFail) {
-			KeywordUtil.markFailed("Username verification FAILED! Expected: " + expectedUsername)
-		}
-		Mobile.closeApplication()
+	@Then("I verify the (.*) in step")
+	def I_verify_the_status_in_step(String status) {
+		println status
 	}
 }
