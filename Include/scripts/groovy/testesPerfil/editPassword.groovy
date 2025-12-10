@@ -105,6 +105,7 @@ class editPassword {
 		}
 		Mobile.delay(3)
 		buttons.tapButton("Profile Button", "com.example.taes_bisca:id/cardProfile")
+		buttons.tapButton("EditProfile", "com.example.taes_bisca:id/cardEditButton")
 		editTextHelper.editText("com.example.taes_bisca:id/etPassword", GlobalVariable.passwordLoggedIn)
 		buttons.tapButton("Editar Perfil", "com.yourpackage:id/cardEditButton")
 		findButtonByText.findBtnText('Save')
