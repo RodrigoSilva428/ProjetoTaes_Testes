@@ -1,4 +1,4 @@
-package login
+package testesPerfil
 import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
@@ -18,7 +18,6 @@ import com.kms.katalon.core.testobject.TestObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
-import buttons
 import internal.GlobalVariable
 
 import org.openqa.selenium.WebElement
@@ -43,13 +42,54 @@ import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
 
+import buttons
+import editTextHelper
+import findButtonByText
+import ReadAndCheckText
 
-import buttons as Btn
-class LoginAsAnonymous {
+class editUsername {
 
-	@When('the user taps the "(.*)" button')
-	def tapButtonStep(String buttonName) {
-		println "Tapping button: ${buttonName}"
-		Btn.tapButton("Login as Anonymous", "com.example.taes_bisca:id/enterAsAnonymousBtn")
+
+	@And("the user navigates to the edit profile page")
+	def userNavigatesToProfile() {
+		// Tap the "Editar Perfil" button using your helper
+		buttons.tapButton("EditProfile", "com.example.taes_bisca:id/cardEditButton")
+	}
+
+	@And("the user edits the username to {string}")
+	def performEditUsername(String newUsername) {
+		println("DEBUG: Editing username to: " + newUsername)
+
+
+		editTextHelper.editText("com.example.taes_bisca:id/etUsername", newUsername)
+		buttons.tapButton("Editar Perfil", "com.yourpackage:id/cardEditButton")
+		findButtonByText.findBtnText('Save')
+
+		Mobile.delay(1)
+		println("DEBUG: Username edited successfully")
+	}
+
+
+
+	@Then("the updated username {string} is displayed in the profile")
+	def verifyUpdatedUsername(String expectedUsername) {
+		println("DEBUG: Verifying that the username is now: " + expectedUsername)
+		Mobile.delay(1)
+		println("DEBUG: Verification complete")
+
+		boolean shouldFail = ReadAndCheckText.checkText(expectedUsername, "com.example.taes_bisca:id/etUsername")
+
+		Mobile.delay(1)
+
+
+		buttons.tapButton("EditProfile", "com.example.taes_bisca:id/cardEditButton")
+		editTextHelper.editText("com.example.taes_bisca:id/etUsername", GlobalVariable.usernameLoggedIn)
+		buttons.tapButton("Editar Perfil", "com.yourpackage:id/cardEditButton")
+		findButtonByText.findBtnText('Save')
+
+		if(shouldFail) {
+			KeywordUtil.markFailed("Username verification FAILED! Expected: " + expectedUsername)
+		}
+		Mobile.closeApplication()
 	}
 }
