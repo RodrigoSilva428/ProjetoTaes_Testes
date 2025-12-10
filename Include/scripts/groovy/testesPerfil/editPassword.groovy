@@ -52,10 +52,10 @@ import login.LoginSteps
 
 
 class editPassword {
-	
+
 	@And('the user edits the password to "(.*)"')
-    def performEditPassword(String newPassword) {
-       	println("DEBUG: Editing username to: " + newPassword)
+	def performEditPassword(String newPassword) {
+		println("DEBUG: Editing username to: " + newPassword)
 
 		editTextHelper.editText("com.example.taes_bisca:id/etPassword", newPassword)
 		buttons.tapButton("Editar Perfil", "com.yourpackage:id/cardEditButton")
@@ -65,41 +65,39 @@ class editPassword {
 		println("DEBUG: Password edited successfully")
 	}
 
-    @And('the user signs out')
-    def signOut() {
-        println "User signs out"
-		
+	@And('the user signs out')
+	def signOut() {
+		println "User signs out"
+
 		buttons.tapButton("Voltar", "com.example.taes_bisca:id/cardBackButton")
 		buttons.tapButton("Sair", "com.example.taes_bisca:id/cardLogout")
-		
-		
-    }
+	}
 
-    @And('the user logs in with username "(.*)" and password "(.*)"')
-    def loginWithCredentials(String username, String password) {
-        println "Logging in with username: ${username} and password: ${password}"
-		
+	@And('the user logs in with username "(.*)" and password "(.*)"')
+	def loginWithCredentials(String username, String password) {
+		println "Logging in with username: ${username} and password: ${password}"
+
 		LoginSteps login = new LoginSteps()
-		
-	    // Open app
+
+		// Open app
 		login.openApp()
-    
+
 		// Enter credentials
 		login.enterCredentials(username, password)
-    
-		// Tap login
-			login.tapLoginButton()
-		}
 
-    @Then('the user should be logged in successfully')
-    def verifyLoginSuccess() {
-        TestObject bisca3Btn = new TestObject("bisca3Btn")
+		// Tap login
+		login.tapLoginButton()
+	}
+
+	@Then('the user should be logged in successfully')
+	def verifyLoginSuccess() {
+		TestObject bisca3Btn = new TestObject("bisca3Btn")
 		bisca3Btn.addProperty("resource-id", ConditionType.EQUALS, "com.example.taes_bisca:id/cardBisca3")
 
 		boolean isPresent = Mobile.waitForElementPresent(bisca3Btn, 10)
 
 		println("DEBUG: Bisca 3 button present? " + isPresent)
-	
+
 		if (!isPresent) {
 			//KeywordUtil.markFailed("Homepage not found (used play Bisca 3 btn as reference)!")
 		}
@@ -111,7 +109,7 @@ class editPassword {
 		findButtonByText.findBtnText('Save')
 
 		Mobile.delay(3)
-		
+
 		Mobile.closeApplication()
-    }
+	}
 }
