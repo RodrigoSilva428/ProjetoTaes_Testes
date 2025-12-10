@@ -42,24 +42,75 @@ import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
 
+import buttons
+import editTextHelper
+import findButtonByText
+import ReadAndCheckText
+
+
+import login.LoginSteps
 
 
 class editPassword {
-	/**
-	 * The step definitions below match with Katalon sample Gherkin steps
-	 */
-	@Given("I want to write a step with (.*)")
-	def I_want_to_write_a_step_with_name(String name) {
-		println name
+	
+	@And('the user edits the password to "(.*)"')
+    def performEditPassword(String newPassword) {
+       	println("DEBUG: Editing username to: " + newPassword)
+
+		editTextHelper.editText("com.example.taes_bisca:id/etPassword", newPassword)
+		buttons.tapButton("Editar Perfil", "com.yourpackage:id/cardEditButton")
+		findButtonByText.findBtnText('Save')
+
+		Mobile.delay(1)
+		println("DEBUG: Password edited successfully")
 	}
 
-	@When("I check for the {int} in step")
-	def I_check_for_the_value_in_step(int value) {
-		println value
-	}
+    @And('the user signs out')
+    def signOut() {
+        println "User signs out"
+		
+		buttons.tapButton("Voltar", "com.example.taes_bisca:id/cardBackButton")
+		buttons.tapButton("Sair", "com.example.taes_bisca:id/cardLogout")
+		
+		
+    }
 
-	@Then("I verify the (.*) in step")
-	def I_verify_the_status_in_step(String status) {
-		println status
-	}
+    @And('the user logs in with username "(.*)" and password "(.*)"')
+    def loginWithCredentials(String username, String password) {
+        println "Logging in with username: ${username} and password: ${password}"
+		
+		LoginSteps login = new LoginSteps()
+		
+	    // Open app
+		login.openApp()
+    
+		// Enter credentials
+		login.enterCredentials(username, password)
+    
+		// Tap login
+			login.tapLoginButton()
+		}
+
+    @Then('the user should be logged in successfully')
+    def verifyLoginSuccess() {
+        TestObject bisca3Btn = new TestObject("bisca3Btn")
+		bisca3Btn.addProperty("resource-id", ConditionType.EQUALS, "com.example.taes_bisca:id/cardBisca3")
+
+		boolean isPresent = Mobile.waitForElementPresent(bisca3Btn, 10)
+
+		println("DEBUG: Bisca 3 button present? " + isPresent)
+	
+		if (!isPresent) {
+			//KeywordUtil.markFailed("Homepage not found (used play Bisca 3 btn as reference)!")
+		}
+		Mobile.delay(3)
+		buttons.tapButton("Profile Button", "com.example.taes_bisca:id/cardProfile")
+		editTextHelper.editText("com.example.taes_bisca:id/etPassword", GlobalVariable.passwordLoggedIn)
+		buttons.tapButton("Editar Perfil", "com.yourpackage:id/cardEditButton")
+		findButtonByText.findBtnText('Save')
+
+		Mobile.delay(3)
+		
+		Mobile.closeApplication()
+    }
 }

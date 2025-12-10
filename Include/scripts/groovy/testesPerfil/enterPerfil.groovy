@@ -58,6 +58,7 @@ class enterPerfil {
 	@Given("the user is logged in with username {string} and password {string}")
 	def login(String username, String password) {
 		GlobalVariable.usernameLoggedIn = username
+		GlobalVariable.passwordLoggedIn = password
 		println("DEBUG: Starting login process")
 
 		// Open the app
