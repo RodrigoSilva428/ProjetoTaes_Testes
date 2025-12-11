@@ -48,6 +48,7 @@ import io.appium.java_client.android.AndroidDriver
 import io.appium.java_client.AppiumBy
 
 import buttons
+import ReadAndCheckText
 
 class equiparAvatar {
 	@When("the user navigates to the collection page")
@@ -91,5 +92,17 @@ class equiparAvatar {
 	@Then("the user confirms he has the right avatar equipped")
 	def confirmAvatarEquipped() {
 		println("Confirming the right avatar is equipped")
+		
+		// Example: check if the avatar name is "Avatar"
+		boolean result = ReadAndCheckText.checkText("Avatar", "tvActiveAvatarName")
+		
+		if(result) {
+			println "Avatar name is correct!"
+		} else {
+			KeywordUtil.markFailed("Text does NOT match!")
+			
+		}
+		
+		
 	}
 }
