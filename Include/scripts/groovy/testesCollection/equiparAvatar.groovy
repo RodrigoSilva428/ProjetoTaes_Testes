@@ -53,26 +53,39 @@ class equiparAvatar {
 	@When("the user navigates to the collection page")
 	def navigateToCollection() {
 		println("Navigating to the collection page")
+		Mobile.delay(3)
 		buttons.tapButton("Collection", "com.example.taes_bisca:id/cardCollection")
-		
 	}
 
 	@And("the user selects avatar {string}")
-		def selectAvatar(String AvatarName) {
-			
-			
-			//buttons.tapButton(avatarName, "android:id/text1")
-			
-			println("Selecting avatar: ${avatarName}")
+	def selectAvatar(String avatarName) {
 
+		println("Selecting avatar: ${avatarName}")
 		
-		}
+			// Scroll to the avatar text (in case it's off-screen)
+			Mobile.scrollToText(avatarName, FailureHandling.OPTIONAL)
+		
+			// Create dynamic TestObject for the avatar item
+			TestObject avatarItem = new TestObject(avatarName)
+			avatarItem.addProperty("resource-id", ConditionType.EQUALS, "android:id/text1")
+			avatarItem.addProperty("text", ConditionType.EQUALS, avatarName)
+		
+			// Wait for the element and tap it
+			if (Mobile.waitForElementPresent(avatarItem, 10)) {
+				Mobile.tap(avatarItem, 10)
+				println("Avatar '${avatarName}' tapped successfully")
+			} else {
+				println("ERROR: Avatar '${avatarName}' not found!")
+			}
+		buttons.tapButton(avatarName, "android:id/text1")
+
+		println("Selecting avatar: ${avatarName}")
+	}
 
 	@And("the user taps the save collection button")
 	def tapSaveCollection() {
 		println("Tapping the save collection button")
 		buttons.tapButton("Save Selection", "com.example.taes_bisca:id/cardSaveSelection")
-		
 	}
 
 	@Then("the user confirms he has the right avatar equipped")
