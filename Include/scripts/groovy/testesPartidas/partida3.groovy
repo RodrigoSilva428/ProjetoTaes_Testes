@@ -42,24 +42,45 @@ import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
 
-
-
+import buttons
+import findButtonByText
+import checkPresence
 class partida3 {
-	/**
-	 * The step definitions below match with Katalon sample Gherkin steps
-	 */
-	@Given("I want to write a step with (.*)")
-	def I_want_to_write_a_step_with_name(String name) {
-		println name
+    
+	@And("the user taps the Iniciar Bisca 3 button")
+	def tapIniciarBisca3() {
+		buttons.tapButton("Bisca 3", "com.example.taes_bisca:id/cardBisca3")
+		
+		TestObject yesButton = new TestObject("dialogYes")
+		yesButton.addProperty("resource-id", ConditionType.EQUALS, "android:id/button1")
+	
+		boolean isPresent = Mobile.waitForElementPresent(yesButton, 5)
+		println("DEBUG: 'Yes' button present? " + isPresent)
+	
+		if (isPresent) {
+			Mobile.tap(yesButton, 10)
+			println("DEBUG: 'Yes' button tapped successfully")
+		} else {
+			println("DEBUG: No 'Yes' button detected (no dialog shown)")
+		}
+	}
+	
+	@And("the user taps the Start Next Round button")
+	def tapStartNextRound() {
+		buttons.tapButton("Start Next Round", "com.example.taes_bisca:id/card_start_round")
+
 	}
 
-	@When("I check for the {int} in step")
-	def I_check_for_the_value_in_step(int value) {
-		println value
-	}
+    @Then("the user verifies that a game started")
+    def verifyGameStarted() {
+        println("Verified that the game started")
+        boolean present = checkPresence.isElementPresent("com.example.taes_bisca:id/tv_turn_indicator", "Turn Indicator")
 
-	@Then("I verify the (.*) in step")
-	def I_verify_the_status_in_step(String status) {
-		println status
-	}
+		if(!present) {
+			KeywordUtil.markFailed("Test failed: game screen not found")
+		}
+		
+		
+		Mobile.closeApplication()
+    }
 }

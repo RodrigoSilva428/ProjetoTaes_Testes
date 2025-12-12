@@ -54,25 +54,21 @@ class equiparAvatar {
 	def navigateToCollection() {
 		println("Navigating to the collection page")
 		buttons.tapButton("Collection", "com.example.taes_bisca:id/cardCollection")
-		
 	}
 
 	@And("the user selects avatar {string}")
-		def selectAvatar(String AvatarName) {
-			
-			
-			//buttons.tapButton(avatarName, "android:id/text1")
-			
-			println("Selecting avatar: ${avatarName}")
+	def selectAvatar(String AvatarName) {
 
-		
-		}
+
+		//buttons.tapButton(avatarName, "android:id/text1")
+
+		println("Selecting avatar: ${avatarName}")
+	}
 
 	@And("the user taps the save collection button")
 	def tapSaveCollection() {
 		println("Tapping the save collection button")
 		buttons.tapButton("Save Selection", "com.example.taes_bisca:id/cardSaveSelection")
-		
 	}
 
 	@Then("the user confirms he has the right avatar equipped")

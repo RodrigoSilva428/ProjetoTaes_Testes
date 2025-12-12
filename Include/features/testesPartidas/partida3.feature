@@ -16,17 +16,11 @@
 #""
 ## (Comments)
 #Sample Feature Definition Template
-@tag
-Feature: Title of your feature
-  I want to use this template for my feature file
+@Partidas
+Feature: Start a game of bisca 3
 
-  @tag1
-  Scenario Outline: Title of your scenario outline
-    Given I want to write a step with <name>
-    When I check for the <value> in step
-    Then I verify the <status> in step
-
-    Examples: 
-      | name  | value | status  |
-      | name1 |     5 | success |
-      | name2 |     7 | Fail    |
+Scenario: The user starts a game of Bisca
+    Given the user is logged in with username "correctUser" and password "correctPassword"
+    And the user taps the Iniciar Bisca 3 button
+    And the user taps the Start Next Round button
+    Then the user verifies that a game started
