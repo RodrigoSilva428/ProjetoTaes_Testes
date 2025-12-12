@@ -1,4 +1,4 @@
-package testesCollection
+package testesPartidas
 import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
@@ -43,63 +43,23 @@ import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
 
 
-import io.appium.java_client.android.AndroidDriver
-
-import io.appium.java_client.AppiumBy
-
 import buttons
-import ReadAndCheckText
+class partida9 {
+	@And("the user taps the Iniciar Bisca 9 button")
+	def tapIniciarBisca3() {
+		buttons.tapButton("Bisca 9", "com.example.taes_bisca:id/cardBisca9")
 
-class equiparAvatar {
+		TestObject yesButton = new TestObject("dialogYes")
+		yesButton.addProperty("resource-id", ConditionType.EQUALS, "android:id/button1")
 
-	String selectedAvatarName
+		boolean isPresent = Mobile.waitForElementPresent(yesButton, 5)
+		println("DEBUG: 'Yes' button present? " + isPresent)
 
-	@When("the user navigates to the collection page")
-	def navigateToCollection() {
-		println("Navigating to the collection page")
-		Mobile.delay(3)
-		buttons.tapButton("Collection", "com.example.taes_bisca:id/cardCollection")
-	}
-
-	@And("the user selects avatar {string}")
-	def selectAvatar(String AvatarName) {
-
-
-		//buttons.tapButton(avatarName, "android:id/text1")
-
-		println("Selecting avatar: ${avatarName}")
-	}
-
-		if (found) {
-			Mobile.tap(avatarItem, 10)
-			println("Avatar '${avatarName}' tapped successfully")
+		if (isPresent) {
+			Mobile.tap(yesButton, 10)
+			println("DEBUG: 'Yes' button tapped successfully")
 		} else {
-			println("ERROR: Avatar '${avatarName}' not found after scrolling!")
-			//KeywordUtil.markFailed("Avatar '${avatarName}' not found!")
-			//Mobile.closeApplication()
+			println("DEBUG: No 'Yes' button detected (no dialog shown)")
 		}
-	}
-
-
-	@And("the user taps the save collection button")
-	def tapSaveCollection() {
-		println("Tapping the save collection button")
-		buttons.tapButton("Save Selection", "com.example.taes_bisca:id/cardSaveSelection")
-	}
-
-	@Then("the user confirms he has the right avatar equipped")
-	def confirmAvatarEquipped() {
-		println("Confirming the right avatar is equipped")
-
-		// Example: check if the avatar name is "Avatar"
-		boolean result = ReadAndCheckText.checkText(selectedAvatarName, "tvActiveAvatarName")
-
-		if(!result) {
-			println "Avatar name is correct!"
-		} else {
-			KeywordUtil.markFailed("Text does NOT match!")
-		}
-		Mobile.delay(3)
-		Mobile.closeApplication()
 	}
 }
