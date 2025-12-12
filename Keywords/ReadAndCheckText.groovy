@@ -14,7 +14,7 @@ class ReadAndCheckText {
 			WebElement element = driver.findElementById(elementId)
 			String actualText = element.getText()
 			println "Expect: '${expectedText}', Found: '${actualText}'"
-			if (actualText.equals(expectedText)) {
+			if (actualText.equals(expectedText.trim())) {
 				println "Text matches: '${actualText}'"
 				return true
 			} else {

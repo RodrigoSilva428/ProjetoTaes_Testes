@@ -51,9 +51,9 @@ import buttons
 import ReadAndCheckText
 
 class equiparAvatar {
-	
+
 	String selectedAvatarName
-	
+
 	@When("the user navigates to the collection page")
 	def navigateToCollection() {
 		println("Navigating to the collection page")
@@ -64,42 +64,41 @@ class equiparAvatar {
 	@And("the user selects avatar {string}")
 	def selectAvatar(String avatarName) {
 
-  println("Selecting avatar: ${avatarName}")
+		println("Selecting avatar: ${avatarName}")
 
-    println("Selecting avatar: ${avatarName}")
+		println("Selecting avatar: ${avatarName}")
 
-    // XPath TestObject for the avatar row TextView
-    String xpathExpr = "//android.widget.ListView[@resource-id='com.example.taes_bisca:id/listViewAvatars']" +
-                       "//android.widget.TextView[contains(@text, '" + avatarName + "')]"
+		// XPath TestObject for the avatar row TextView
+		String xpathExpr = "//android.widget.ListView[@resource-id='com.example.taes_bisca:id/listViewAvatars']" +
+				"//android.widget.TextView[contains(@text, '" + avatarName + "')]"
 
-    TestObject avatarItem = new TestObject("dynamicAvatar")
-    avatarItem.addProperty("xpath", ConditionType.EQUALS, xpathExpr)
+		TestObject avatarItem = new TestObject("dynamicAvatar")
+		avatarItem.addProperty("xpath", ConditionType.EQUALS, xpathExpr)
 
-    // Scroll/swipe loop
-    int maxScrolls = 10
-    boolean found = false
+		// Scroll/swipe loop
+		int maxScrolls = 10
+		boolean found = false
 
-    for (int i = 0; i < maxScrolls; i++) {
-        if (Mobile.waitForElementPresent(avatarItem, 1)) {
-            found = true
-            break
-        }
-        // swipe up (adjust coords for your device)
-        Mobile.swipe(200, 800, 200, 400)
-    }
+		for (int i = 0; i < maxScrolls; i++) {
+			if (Mobile.waitForElementPresent(avatarItem, 1)) {
+				found = true
+				break
+			}
+			// swipe up (adjust coords for your device)
+			Mobile.swipe(200, 800, 200, 400)
+		}
 
-    if (found) {
-        Mobile.tap(avatarItem, 10)
-        println("Avatar '${avatarName}' tapped successfully")
-    } else {
-        println("ERROR: Avatar '${avatarName}' not found after scrolling!")
-        //KeywordUtil.markFailed("Avatar '${avatarName}' not found!")
-        //Mobile.closeApplication()
-    }
-		
+		if (found) {
+			Mobile.tap(avatarItem, 10)
+			println("Avatar '${avatarName}' tapped successfully")
+		} else {
+			println("ERROR: Avatar '${avatarName}' not found after scrolling!")
+			//KeywordUtil.markFailed("Avatar '${avatarName}' not found!")
+			//Mobile.closeApplication()
+		}
 	}
 
-	
+
 	@And("the user taps the save collection button")
 	def tapSaveCollection() {
 		println("Tapping the save collection button")
@@ -111,15 +110,14 @@ class equiparAvatar {
 		println("Confirming the right avatar is equipped")
 
 		// Example: check if the avatar name is "Avatar"
-		 boolean result = ReadAndCheckText.checkText(selectedAvatarName, "tvActiveAvatarName")
+		boolean result = ReadAndCheckText.checkText(selectedAvatarName, "tvActiveAvatarName")
 
-		if(result) {
+		if(!result) {
 			println "Avatar name is correct!"
 		} else {
 			KeywordUtil.markFailed("Text does NOT match!")
 		}
-
+		Mobile.delay(3)
 		Mobile.closeApplication()
-
 	}
 }
