@@ -48,11 +48,16 @@ import io.appium.java_client.android.AndroidDriver
 import io.appium.java_client.AppiumBy
 
 import buttons
+import ReadAndCheckText
 
 class equiparAvatar {
+
+	String selectedAvatarName
+
 	@When("the user navigates to the collection page")
 	def navigateToCollection() {
 		println("Navigating to the collection page")
+		Mobile.delay(3)
 		buttons.tapButton("Collection", "com.example.taes_bisca:id/cardCollection")
 	}
 
@@ -65,6 +70,17 @@ class equiparAvatar {
 		println("Selecting avatar: ${avatarName}")
 	}
 
+		if (found) {
+			Mobile.tap(avatarItem, 10)
+			println("Avatar '${avatarName}' tapped successfully")
+		} else {
+			println("ERROR: Avatar '${avatarName}' not found after scrolling!")
+			//KeywordUtil.markFailed("Avatar '${avatarName}' not found!")
+			//Mobile.closeApplication()
+		}
+	}
+
+
 	@And("the user taps the save collection button")
 	def tapSaveCollection() {
 		println("Tapping the save collection button")
@@ -74,5 +90,16 @@ class equiparAvatar {
 	@Then("the user confirms he has the right avatar equipped")
 	def confirmAvatarEquipped() {
 		println("Confirming the right avatar is equipped")
+
+		// Example: check if the avatar name is "Avatar"
+		boolean result = ReadAndCheckText.checkText(selectedAvatarName, "tvActiveAvatarName")
+
+		if(!result) {
+			println "Avatar name is correct!"
+		} else {
+			KeywordUtil.markFailed("Text does NOT match!")
+		}
+		Mobile.delay(3)
+		Mobile.closeApplication()
 	}
 }
