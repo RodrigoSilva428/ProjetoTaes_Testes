@@ -42,14 +42,12 @@ import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
 
-import buttons
-import findButtonByText
-import checkPresence
-class partida3 {
 
-	@And("the user taps the Iniciar Bisca 3 button")
+import buttons
+class partida9 {
+	@And("the user taps the Iniciar Bisca 9 button")
 	def tapIniciarBisca3() {
-		buttons.tapButton("Bisca 3", "com.example.taes_bisca:id/cardBisca3")
+		buttons.tapButton("Bisca 9", "com.example.taes_bisca:id/cardBisca9")
 
 		TestObject yesButton = new TestObject("dialogYes")
 		yesButton.addProperty("resource-id", ConditionType.EQUALS, "android:id/button1")
@@ -63,23 +61,5 @@ class partida3 {
 		} else {
 			println("DEBUG: No 'Yes' button detected (no dialog shown)")
 		}
-	}
-
-	@And("the user taps the Start Next Round button")
-	def tapStartNextRound() {
-		buttons.tapButton("Start Next Round", "com.example.taes_bisca:id/card_start_round")
-	}
-
-	@Then("the user verifies that a game started")
-	def verifyGameStarted() {
-		println("Verified that the game started")
-		boolean present = checkPresence.isElementPresent("com.example.taes_bisca:id/tv_turn_indicator", "Turn Indicator")
-
-		if(!present) {
-			KeywordUtil.markFailed("Test failed: game screen not found")
-		}
-
-
-		Mobile.closeApplication()
 	}
 }
