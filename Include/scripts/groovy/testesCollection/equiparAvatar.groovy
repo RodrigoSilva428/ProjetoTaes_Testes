@@ -62,13 +62,31 @@ class equiparAvatar {
 	}
 
 	@And("the user selects avatar {string}")
-	def selectAvatar(String AvatarName) {
-
-
-		//buttons.tapButton(avatarName, "android:id/text1")
+	def selectAvatar(String avatarName) {
 
 		println("Selecting avatar: ${avatarName}")
-	}
+
+		println("Selecting avatar: ${avatarName}")
+
+		// XPath TestObject for the avatar row TextView
+		String xpathExpr = "//android.widget.ListView[@resource-id='com.example.taes_bisca:id/listViewAvatars']" +
+				"//android.widget.TextView[contains(@text, '" + avatarName + "')]"
+
+		TestObject avatarItem = new TestObject("dynamicAvatar")
+		avatarItem.addProperty("xpath", ConditionType.EQUALS, xpathExpr)
+
+		// Scroll/swipe loop
+		int maxScrolls = 10
+		boolean found = false
+
+		for (int i = 0; i < maxScrolls; i++) {
+			if (Mobile.waitForElementPresent(avatarItem, 1)) {
+				found = true
+				break
+			}
+			// swipe up (adjust coords for your device)
+			Mobile.swipe(200, 800, 200, 400)
+		}
 
 		if (found) {
 			Mobile.tap(avatarItem, 10)
